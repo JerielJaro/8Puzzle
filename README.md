@@ -1,4 +1,5 @@
 # 8-Puzzle for the ICS-OS
+	An application made by CMSC 125 students as partial requirements for the completion of CMSC 125 - Operating Systems.
 
 
 # Description:
@@ -9,4 +10,5 @@
 	https://github.com/srg-ics-uplb/ics-os
 
 # How to run:
+	To be updated
 
