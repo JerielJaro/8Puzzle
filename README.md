@@ -44,6 +44,18 @@
 
 	5.) You can now run the .exe file on the ICS-OS!
 
+## Editing the source code:
+	1.) Edit the .c file in the 8puzzle folder located in /ics-os/contrib/
+
+	2.) Run the following commands after saving the changes
+
+		$make
+		$make install
+		$cd ../../
+		$sudo make install
+
+	3.) Run the ICS-OS to see the changes take effect
+
 ### Authors
 	Miles Lawrence R. Basnillo
 	Jeriel Jaro
