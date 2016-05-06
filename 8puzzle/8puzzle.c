@@ -5,7 +5,6 @@
 
 	CMSC 125 Project: 8-Puzzle Game
 
-	Last updated on 05/05/16
 */	
 
 /* NOTE: Use ../sdk/ when running from ics-os, use <stdio.h> when running from terminal */
