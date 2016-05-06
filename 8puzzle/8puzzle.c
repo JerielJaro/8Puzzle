@@ -14,13 +14,17 @@
 #include <stdio.h>
 #include <time.h>
 
-void Randomize(int board[9]);
-void PrintBoard(int board[9]);
-int CheckBoard(int board[9]);
-void NewGame(int board[9]);
-void erase();
+//void Randomize(int board[9]);
+//void PrintBoard(int board[9]);
+//int CheckBoard(int board[9]);
+//void NewGame(int board[9]);
+void Erase();
+void PrintInstructions();
 //void SaveBoard(int board[9]);
 //void LoadBoard(int board[9]);
+
+#define col 3
+#define row 3
 
 #define up 'w'
 #define down 's'
@@ -28,6 +32,8 @@ void erase();
 #define right 'd'
 #define quit 'q'
 #define start 'e'
+
+int board[row][col];
 
 void main(int argc, char *argv[]){
 	/*
@@ -44,22 +50,23 @@ void main(int argc, char *argv[]){
 	char keypress = start;
 
 	set_graphics(VGA_320X200X256);
-	write_text("Hello, World!", 69, 69, WHITE, 0);
+
+	PrintInstructions();
 
 	do{
 		keypress=(char)getch();
 		if(keypress == up){
-			erase(69, 69, 300, 300);
-			write_text("I pressed UP!", 69, 69, WHITE, 0);
+			Erase(150, 50, 150, 50);
+			write_text("I pressed UP!", 150, 50, WHITE, 0);			//REPLACE WRITE_TEXT WITH SWAP FUNCTIONS
 		}else if(keypress == left){
-			erase(69, 69, 300, 300);
-			write_text("I pressed LEFT!", 69, 69, WHITE, 0);
+			Erase(150, 50, 150, 50);
+			write_text("I pressed LEFT!", 150, 50, WHITE, 0);
 		}else if(keypress == right){
-			erase(69, 69, 300, 300);
-			write_text("I pressed RIGHT!", 69, 69, WHITE, 0);
+			Erase(150, 50, 150, 50);
+			write_text("I pressed RIGHT!", 150, 50, WHITE, 0);
 		}else if(keypress == down){
-			erase(69, 69, 300, 300);
-			write_text("I pressed DOWN!", 69, 69, WHITE, 0);
+			Erase(150, 50, 150, 50);
+			write_text("I pressed DOWN!", 150, 50, WHITE, 0);
 		}
 	}while(keypress != quit);
 
@@ -70,13 +77,27 @@ void main(int argc, char *argv[]){
 /*
 	Function from the lights out example
 */
-void erase(int x, int y, int w, int h){ //basically covers an area with a black rectangle 
+void Erase(int x, int y, int w, int h){ //basically covers an area with a black rectangle 
    int i,j;
    for (i=y;i<=(y+h);i++)
       for (j=x;j<=(x+w);j++)
          write_pixel(j,i,100);
 }
 
+/*
+	For printing the instructions
+*/
+void PrintInstructions(){
+	write_text("8-Puzzle Game", 10, 20, WHITE, 0);
+	write_text("Instructions: ", 10, 40, WHITE, 0);
+	write_text("W - Move Up", 10, 60, WHITE, 0);
+	write_text("S - Move Down", 10, 70, WHITE, 0);
+	write_text("A - Move Left", 10, 80, WHITE, 0);
+	write_text("D - Move Right", 10, 90, WHITE, 0);
+	write_text("Q - Exit", 10, 100, WHITE, 0);
+}
+
+/*
 void Randomize(int board[9]){
 	int i,j;
 	int boardCheck[9] = {0};
@@ -120,7 +141,7 @@ void NewGame(int board[9]){
 	if(CheckBoard(board)%2 == 0){
 	}
 }
-
+*/
 /*
 void SaveBoard(int board[9]){
 	FILE * fp = fopen("saveFile.txt", "w");
