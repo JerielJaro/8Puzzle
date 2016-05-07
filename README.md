@@ -47,14 +47,17 @@
 ## Editing the source code:
 	1.) Edit the .c file in the 8puzzle folder located in /ics-os/contrib/
 
-	2.) Run the following commands after saving the changes
+	2.) Run:
 
-		$make
-		$make install
-		$cd ../../
-		$sudo make install
+		$./compile.sh
 
-	3.) Run the ICS-OS to see the changes take effect
+		in order to compile your code to the OS.
+
+	If the command doesn't work, run:
+
+		$chmod 755 compile.sh
+
+	then run it again.
 
 ### Authors
 	Miles Lawrence R. Basnillo
