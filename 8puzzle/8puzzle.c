@@ -17,7 +17,8 @@ void PrintInstructions(int x, int y);
 void RandomizeBoard();
 void PrintMenu();
 void PrintBoard(int x, int y);						
-void PrintBorder(); 								
+void PrintBorder(); 
+void PrintArrow(int x, int y);								
 
 #define col 3
 #define row 3
@@ -28,49 +29,77 @@ void PrintBorder();
 #define right 'd'
 #define quit 'q'
 #define start 'e'
+#define enter '\n'
 
 /* Global variables */
 int board[row][col];
 
 void main(int argc, char *argv[]){
 	char keypress = start;
+	int ch=0;
 
 	RandomizeBoard();
 
 	set_graphics(VGA_320X200X256);
 
-	do{	
+	PrintArrow(80, 105);
+
+	do{	//Game loop
 		PrintBorder();
 		PrintMenu();
 		keypress = (char)getch();
 
-		if(keypress == start){
-			EraseAll();
-			do{
-				PrintInstructions(15, 20);
-				PrintBoard(155, 50);										//* Always prints update version of board at coordinates
-				PrintBorder();														//* Always prints border
-				keypress=(char)getch();
-				
-				if(keypress == up){
-					Erase(155, 25, 150, 50);
-					write_text("I pressed UP!", 155, 25, WHITE, -1);			//* Must update the values of the board after each keypress
-				}else if(keypress == left){
-					Erase(155, 25, 150, 50);
-					write_text("I pressed LEFT!", 155, 25, WHITE, -1);
-				}else if(keypress == right){
-					Erase(155, 25, 150, 50);
-					write_text("I pressed RIGHT!", 155, 25, WHITE, -1);
-				}else if(keypress == down){
-					Erase(155, 25, 150, 50);
-					write_text("I pressed DOWN!", 155, 25, WHITE, -1);
-				}else{
-					Erase(155, 25, 150, 50);
-					write_text("Invalid button!", 155, 25, WHITE, -1);
-				}
-				
-			}while(keypress != quit);
+		if(keypress == quit){
+			keypress = start;					//special condition so that it will not exit on Q press at menu
+		}else if(keypress == up){
+			Erase(80, 120, 15, 15);
+			PrintArrow(80, 105);
+			ch = 0;
+		}else if(keypress == down){
+			Erase(80, 100, 15, 15);
+			PrintArrow(80, 125);
+			ch = 1;
+		}else if(keypress == enter){
+			switch(ch){
+				case 0:
+						EraseAll();
+						do{	//Inside-the-game loop
+							PrintInstructions(180, 30);
+							PrintBoard(30, 30);										//* Always prints update version of board at coordinates
+							PrintBorder();														//* Always prints border
+							keypress=(char)getch();
+							
+							if(keypress == up){
+								Erase(55, 175, 150, 25);
+								write_text("I pressed UP!", 55, 175, WHITE, 0);			//* Must update the values of the board after each keypress
+							}else if(keypress == left){
+								Erase(55, 175, 150, 25);
+								write_text("I pressed LEFT!", 55, 175, WHITE, 0);
+							}else if(keypress == right){
+								Erase(55, 175, 150, 25);
+								write_text("I pressed RIGHT!", 55, 175, WHITE, 0);
+							}else if(keypress == down){
+								Erase(55, 175, 150, 25);
+								write_text("I pressed DOWN!", 55, 175, WHITE, 0);
+							}else if(keypress == quit){
+								Erase(55, 175, 150, 25);
+								write_text("Exiting game...", 55, 175, WHITE, 0);
+							}else{
+								Erase(55, 175, 150, 25);
+								write_text("Invalid button!", 55, 175, WHITE, 0);
+							}
+							
+						}while(keypress != quit);
+						EraseAll();
+						PrintArrow(80, 105);
+						keypress = start;
+						break;
+				case 1: keypress = quit;
+						break;
+				default: break;
+			}
 		}
+		
 	}while(keypress != quit);
 	
 	set_graphics(VGA_TEXT80X25X16);
@@ -78,12 +107,15 @@ void main(int argc, char *argv[]){
 }
 
 void PrintMenu(){
-	write_text("8-", 140, 20, GREEN, 1);
-	write_text("Puzzle", 160, 20, RED, 1);
-	write_text("A game by CMSC 125 Students", 75, 35, WHITE, 0);
+	int i, y=55, color;
+	color = RED;
 
-	write_text("E - Start Game", 100, 100, WHITE, 1);
-	write_text("Q - Quit", 100, 120, WHITE, 1);
+	write_text("8-", 20, 20, GREEN, 1);
+	write_text("Puzzle", 40, 20, RED, 1);
+	write_text("A game by CMSC 125 Students", 55, 35, WHITE, 0);
+	for(i=15;i<305;i++) write_pixel(i, y, color);
+	write_text("Start Game", 100, 100, WHITE, 1);
+	write_text("Quit", 100, 120, WHITE, 1);
 }
 
 void PrintBorder(){
@@ -101,6 +133,9 @@ void PrintBorder(){
 	for(i=5;i<195;i++) write_pixel(x2+2, i, color1);	//RIGHT
 }
 
+/*
+
+*/
 void PrintBoard(int x, int y){
 	int i, j, k, l;
 	k = x;
@@ -120,6 +155,9 @@ void PrintBoard(int x, int y){
 	}
 }
 
+/*
+	Function from the lights out example
+*/
 void Erase(int x, int y, int w, int h){ //basically covers an area with a black rectangle 
    int i,j;
    for (i=y;i<=(y+h);i++)
@@ -146,6 +184,10 @@ void PrintInstructions(int x, int y){
 	write_text("Q - Exit", x, y+80, WHITE, 0);
 }
 
+void PrintArrow(int x, int y){
+	write_text(">>", x, y, WHITE, 0);
+}
+
 
 void RandomizeBoard(){
 	int i, j;
@@ -163,6 +205,7 @@ void RandomizeBoard(){
 		}
 	}
 }
+
 
 
 /*
