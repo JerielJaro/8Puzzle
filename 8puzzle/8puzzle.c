@@ -157,7 +157,7 @@ void PrintBoard(int x, int y){
 
 	char str[10];
 	for(i=0; i<row; i++, l+=30){
-		for(j=0; j<col; j++, k+=55){
+		for(j=0; j<col; j++, k+=45){
 			if(board[i][j] == 0){
 				write_text(" ", k, l, WHITE, 0);
 			}else{
@@ -166,6 +166,20 @@ void PrintBoard(int x, int y){
 			}
 		}
 		k = x;
+	}
+
+	for(i=20;i<140;i++){
+		write_pixel(i, 20, WHITE);
+		write_pixel(i, 50, WHITE);
+		write_pixel(i, 80, WHITE);
+		write_pixel(i, 110, WHITE);
+	}
+
+	for(i=20;i<110;i++){
+		write_pixel(20, i, WHITE);
+		write_pixel(60, i, WHITE);
+		write_pixel(100, i, WHITE);
+		write_pixel(140, i, WHITE);
 	}
 }
 
