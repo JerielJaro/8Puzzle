@@ -29,7 +29,10 @@ void PrintArrow(int x, int y);
 #define right 'd'
 #define quit 'q'
 #define start 'e'
+#define yes 'y'
+#define no 'n'
 #define enter '\n'
+#define space ' '
 
 /* Global variables */
 int board[row][col];
@@ -59,7 +62,7 @@ void main(int argc, char *argv[]){
 			Erase(80, 100, 15, 15);
 			PrintArrow(80, 125);
 			ch = 1;
-		}else if(keypress == enter){
+		}else if(keypress == enter || keypress == space){
 			switch(ch){
 				case 0:
 						EraseAll();
@@ -70,22 +73,33 @@ void main(int argc, char *argv[]){
 							keypress=(char)getch();
 							
 							if(keypress == up){
-								Erase(55, 175, 150, 25);
+								Erase(55, 175, 150, 15);
 								write_text("I pressed UP!", 55, 175, WHITE, 0);			//* Must update the values of the board after each keypress
 							}else if(keypress == left){
-								Erase(55, 175, 150, 25);
+								Erase(55, 175, 150, 15);
 								write_text("I pressed LEFT!", 55, 175, WHITE, 0);
 							}else if(keypress == right){
-								Erase(55, 175, 150, 25);
+								Erase(55, 175, 150, 15);
 								write_text("I pressed RIGHT!", 55, 175, WHITE, 0);
 							}else if(keypress == down){
-								Erase(55, 175, 150, 25);
+								Erase(55, 175, 150, 15);
 								write_text("I pressed DOWN!", 55, 175, WHITE, 0);
 							}else if(keypress == quit){
-								Erase(55, 175, 150, 25);
-								write_text("Exiting game...", 55, 175, WHITE, 0);
+								Erase(55, 175, 150, 15);
+								write_text("Are you sure? Y/N", 55, 175, WHITE, 0);
+								do{
+									keypress=(char)getch();
+									if(keypress == yes){
+										keypress = quit;
+										break;
+									}else if(keypress == no){
+										keypress = yes;
+										Erase(55, 175, 150, 15);
+										break;
+									}
+								}while(1);
 							}else{
-								Erase(55, 175, 150, 25);
+								Erase(55, 175, 150, 15);
 								write_text("Invalid button!", 55, 175, WHITE, 0);
 							}
 							
@@ -205,8 +219,6 @@ void RandomizeBoard(){
 		}
 	}
 }
-
-
 
 /*
 	FUNCTION FOR CHECKING INVERSIONS (TO BE USED LATER)
