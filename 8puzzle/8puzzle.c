@@ -19,14 +19,19 @@ void PrintMenu();
 void PrintBoard(int x, int y);						
 void PrintBorder(); 
 void PrintArrow(int x, int y);								
+void MovePiece(char d);
 
 #define col 3
 #define row 3
 
 #define up 'w'
+#define up2 (char)151
 #define down 's'
+#define down2 (char)152
 #define left 'a'
+#define left2 (char)150
 #define right 'd'
+#define right2 (char)153
 #define quit 'q'
 #define start 'e'
 #define yes 'y'
@@ -54,11 +59,11 @@ void main(int argc, char *argv[]){
 
 		if(keypress == quit){
 			keypress = start;					//special condition so that it will not exit on Q press at menu
-		}else if(keypress == up){
+		}else if(keypress == up || keypress == up2){
 			Erase(80, 120, 15, 15);
 			PrintArrow(80, 105);
 			ch = 0;
-		}else if(keypress == down){
+		}else if(keypress == down || keypress == down2){
 			Erase(80, 100, 15, 15);
 			PrintArrow(80, 125);
 			ch = 1;
@@ -74,16 +79,24 @@ void main(int argc, char *argv[]){
 							
 							if(keypress == up){
 								Erase(55, 175, 150, 15);
-								write_text("I pressed UP!", 55, 175, WHITE, 0);			//* Must update the values of the board after each keypress
+								//write_text("I pressed UP!", 55, 175, WHITE, 0);			//* Must update the values of the board after each keypress
+								Erase(15, 15, 150, 170);
+								MovePiece(keypress);
 							}else if(keypress == left){
 								Erase(55, 175, 150, 15);
-								write_text("I pressed LEFT!", 55, 175, WHITE, 0);
+								//write_text("I pressed LEFT!", 55, 175, WHITE, 0);
+								Erase(15, 15, 150, 170);
+								MovePiece(keypress);
 							}else if(keypress == right){
 								Erase(55, 175, 150, 15);
-								write_text("I pressed RIGHT!", 55, 175, WHITE, 0);
+								//write_text("I pressed RIGHT!", 55, 175, WHITE, 0);
+								Erase(15, 15, 150, 170);
+								MovePiece(keypress);
 							}else if(keypress == down){
 								Erase(55, 175, 150, 15);
-								write_text("I pressed DOWN!", 55, 175, WHITE, 0);
+								//write_text("I pressed DOWN!", 55, 175, WHITE, 0);
+								Erase(15, 15, 150, 170);
+								MovePiece(keypress);
 							}else if(keypress == quit){
 								Erase(55, 175, 150, 15);
 								write_text("Are you sure? Y/N", 55, 175, WHITE, 0);
@@ -130,6 +143,8 @@ void PrintMenu(){
 	for(i=15;i<305;i++) write_pixel(i, y, color);
 	write_text("Start Game", 100, 100, WHITE, 1);
 	write_text("Quit", 100, 120, WHITE, 1);
+
+	write_text("ICS-OS", 250, 160, WHITE, 1);
 }
 
 void PrintBorder(){
@@ -177,7 +192,7 @@ void PrintBoard(int x, int y){
 
 	for(i=20;i<110;i++){
 		write_pixel(20, i, WHITE);
-		write_pixel(60, i, WHITE);
+		write_pixel(60, i, WHITE);	
 		write_pixel(100, i, WHITE);
 		write_pixel(140, i, WHITE);
 	}
@@ -218,7 +233,16 @@ void PrintArrow(int x, int y){
 
 
 void RandomizeBoard(){
-	int i, j;
+	int i, j, k=0;
+	//temp hardcode
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+			board[i][j] = k;
+			k++;
+		}
+	}
+	//end of temp*/
+	/*
 	int boardCheck[9] = {0};
 	for(i=0;i<3;i++){
 		for(j=0;j<3;j++){
@@ -232,7 +256,38 @@ void RandomizeBoard(){
 			}
 		}
 	}
+	*/
 }
+
+void MovePiece(char d){
+	int i, j, x, y, temp;
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+			if(board[i][j] == 0){
+				x = i;
+				y = j;
+				break;
+			}
+		}
+	}
+	if(d == up){	
+		board[x][y] = board[x+1][y];
+		board[x+1][y] = 0;
+	}
+	if(d == down){
+		board[x][y] = board[x-1][y];
+		board[x-1][y] = 0;
+	}
+	if(d == right){
+		board[x][y] = board[x][y-1];
+		board[x][y-1] = 0;
+	}
+	if(d == left){
+		board[x][y] = board[x][y+1];
+		board[x][y+1] = 0;
+	}
+}
+
 
 /*
 	FUNCTION FOR CHECKING INVERSIONS (TO BE USED LATER)
