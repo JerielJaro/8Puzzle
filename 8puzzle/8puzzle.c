@@ -77,22 +77,22 @@ void main(int argc, char *argv[]){
 							PrintBorder();														//* Always prints border
 							keypress=(char)getch();
 							
-							if(keypress == up){
+							if(keypress == up || keypress == up2){
 								Erase(55, 175, 150, 15);
 								//write_text("I pressed UP!", 55, 175, WHITE, 0);			//* Must update the values of the board after each keypress
 								Erase(15, 15, 150, 170);
 								MovePiece(keypress);
-							}else if(keypress == left){
+							}else if(keypress == left || keypress == left2){
 								Erase(55, 175, 150, 15);
 								//write_text("I pressed LEFT!", 55, 175, WHITE, 0);
 								Erase(15, 15, 150, 170);
 								MovePiece(keypress);
-							}else if(keypress == right){
+							}else if(keypress == right || keypress == right2){
 								Erase(55, 175, 150, 15);
 								//write_text("I pressed RIGHT!", 55, 175, WHITE, 0);
 								Erase(15, 15, 150, 170);
 								MovePiece(keypress);
-							}else if(keypress == down){
+							}else if(keypress == down || keypress == down2){
 								Erase(55, 175, 150, 15);
 								//write_text("I pressed DOWN!", 55, 175, WHITE, 0);
 								Erase(15, 15, 150, 170);
@@ -270,19 +270,19 @@ void MovePiece(char d){
 			}
 		}
 	}
-	if(d == up){	
+	if(d == up || d == up2){	
 		board[x][y] = board[x+1][y];
 		board[x+1][y] = 0;
 	}
-	if(d == down){
+	if(d == down || d == down2){
 		board[x][y] = board[x-1][y];
 		board[x-1][y] = 0;
 	}
-	if(d == right){
+	if(d == right || d == right2){
 		board[x][y] = board[x][y-1];
 		board[x][y-1] = 0;
 	}
-	if(d == left){
+	if(d == left || d == left2){
 		board[x][y] = board[x][y+1];
 		board[x][y+1] = 0;
 	}
